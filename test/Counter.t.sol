@@ -46,7 +46,10 @@ contract CounterTest is Test, Fixtures {
                     | Hooks.BEFORE_REMOVE_LIQUIDITY_FLAG
             ) ^ (0x4444 << 144) // Namespace the hook to avoid collisions
         );
-        bytes memory constructorArgs = abi.encode(manager); //Add all the necessary constructor arguments from the hook
+
+        // TODO: Custom Curve contract address
+        address customCurveContract = 0xE0f5206BBD039e7b0592d8918820024e2a7437b9;
+        bytes memory constructorArgs = abi.encode(manager, customCurveContract); //Add all the necessary constructor arguments from the hook
         deployCodeTo("Counter.sol:Counter", constructorArgs, flags);
         hook = Counter(flags);
 

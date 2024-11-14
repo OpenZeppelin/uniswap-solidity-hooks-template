@@ -10,6 +10,16 @@ import {PoolId, PoolIdLibrary} from "v4-core/src/types/PoolId.sol";
 import {BalanceDelta} from "v4-core/src/types/BalanceDelta.sol";
 import {BeforeSwapDelta, BeforeSwapDeltaLibrary} from "v4-core/src/types/BeforeSwapDelta.sol";
 
+interface IUniswapCurve {
+    function getAmountInForExactOutput(uint256 amountOut, address input, address output, bool zeroForOne)
+        external
+        returns (uint256);
+
+    function getAmountOutFromExactInput(uint256 amountIn, address input, address output, bool zeroForOne)
+        external
+        returns (uint256);
+}
+
 contract Counter is BaseHook {
     using PoolIdLibrary for PoolKey;
 
@@ -24,7 +34,11 @@ contract Counter is BaseHook {
     mapping(PoolId => uint256 count) public beforeAddLiquidityCount;
     mapping(PoolId => uint256 count) public beforeRemoveLiquidityCount;
 
-    constructor(IPoolManager _poolManager) BaseHook(_poolManager) {}
+    IUniswapCurve _customCurveContract;
+
+    constructor(IPoolManager _poolManager, address _customCurveAddress) BaseHook(_poolManager) {
+        _customCurveContract = IUniswapCurve(_customCurveAddress);
+    }
 
     function getHookPermissions() public pure override returns (Hooks.Permissions memory) {
         return Hooks.Permissions({
