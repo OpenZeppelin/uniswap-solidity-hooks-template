@@ -27,7 +27,10 @@ contract CounterScript is Script, Constants {
 
         // Deploy the hook using CREATE2
         vm.broadcast();
-        Counter counter = new Counter{salt: salt}(IPoolManager(POOLMANAGER));
+
+        // TODO: Custom Curve contract address
+        address customCurveContract = 0xE0f5206BBD039e7b0592d8918820024e2a7437b9;
+        Counter counter = new Counter{salt: salt}(IPoolManager(POOLMANAGER), customCurveContract);
         require(address(counter) == hookAddress, "CounterScript: hook address mismatch");
     }
 }
