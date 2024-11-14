@@ -12,6 +12,7 @@ import {PoolId, PoolIdLibrary} from "v4-core/src/types/PoolId.sol";
 import {CurrencyLibrary, Currency} from "v4-core/src/types/Currency.sol";
 import {PoolSwapTest} from "v4-core/src/test/PoolSwapTest.sol";
 import {Counter} from "../src/Counter.sol";
+import {MockCurve} from "./MockCurve.sol";
 import {StateLibrary} from "v4-core/src/libraries/StateLibrary.sol";
 
 import {LiquidityAmounts} from "v4-core/test/utils/LiquidityAmounts.sol";
@@ -47,8 +48,11 @@ contract CounterTest is Test, Fixtures {
             ) ^ (0x4444 << 144) // Namespace the hook to avoid collisions
         );
 
-        // TODO: Custom Curve contract address
+        // Deploy mocked Custom Curve contract
         address customCurveContract = 0xE0f5206BBD039e7b0592d8918820024e2a7437b9;
+        deployCodeTo("MockCurve.sol:MockCurve", abi.encode(), customCurveContract);
+
+        // Deploy Counter Contract
         bytes memory constructorArgs = abi.encode(manager, customCurveContract); //Add all the necessary constructor arguments from the hook
         deployCodeTo("Counter.sol:Counter", constructorArgs, flags);
         hook = Counter(flags);
