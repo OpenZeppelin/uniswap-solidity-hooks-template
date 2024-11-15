@@ -12,6 +12,7 @@ import {BeforeSwapDelta, BeforeSwapDeltaLibrary, toBeforeSwapDelta} from "v4-cor
 import {Currency, CurrencyLibrary} from "v4-core/src/types/Currency.sol";
 import {SafeCast} from "v4-core/src/libraries/SafeCast.sol";
 
+// Make sure to update the interface when Stylus Contract's Solidity ABI changes.
 interface IUniswapCurve {
     function getAmountInForExactOutput(uint256 amountOut, address input, address output, bool zeroForOne)
         external
@@ -52,11 +53,11 @@ contract Counter is BaseHook {
             afterAddLiquidity: false,
             beforeRemoveLiquidity: true,
             afterRemoveLiquidity: false,
-            beforeSwap: true,
+            beforeSwap: true, // -- Custom Curve Handler --  //
             afterSwap: true,
             beforeDonate: false,
             afterDonate: false,
-            beforeSwapReturnDelta: false,
+            beforeSwapReturnDelta: false, // -- Enables Custom Curves --  //
             afterSwapReturnDelta: false,
             afterAddLiquidityReturnDelta: false,
             afterRemoveLiquidityReturnDelta: false
@@ -72,6 +73,8 @@ contract Counter is BaseHook {
         override
         returns (bytes4, BeforeSwapDelta, uint24)
     {
+        // You can add, modify, or delete the logic here if needed.
+
         bool exactInput = params.amountSpecified < 0;
         (Currency specified, Currency unspecified) =
             (params.zeroForOne == exactInput) ? (key.currency0, key.currency1) : (key.currency1, key.currency0);
@@ -85,17 +88,13 @@ contract Counter is BaseHook {
             unspecifiedAmount = _curveContract.getAmountOutFromExactInput(
                 specifiedAmount, Currency.unwrap(specified), Currency.unwrap(unspecified), params.zeroForOne
             );
-            /*
-             * Additional logic here if needed.
-            */
+
             returnDelta = toBeforeSwapDelta(specifiedAmount.toInt128(), -unspecifiedAmount.toInt128());
         } else {
             unspecifiedAmount = _curveContract.getAmountInForExactOutput(
                 specifiedAmount, Currency.unwrap(unspecified), Currency.unwrap(specified), params.zeroForOne
             );
-            /*
-             * Additional logic here if needed.
-            */
+
             returnDelta = toBeforeSwapDelta(-specifiedAmount.toInt128(), unspecifiedAmount.toInt128());
         }
 

@@ -53,7 +53,7 @@ contract SwapScript is Script, Constants, Config {
             sqrtPriceLimitX96: zeroForOne ? MIN_PRICE_LIMIT : MAX_PRICE_LIMIT // unlimited impact
         });
 
-        // in v4, users have the option to receieve native ERC20s or wrapped ERC1155 tokens
+        // in v4, users have the option to receive native ERC20s or wrapped ERC1155 tokens
         // here, we'll take the ERC20s
         PoolSwapTest.TestSettings memory testSettings =
             PoolSwapTest.TestSettings({takeClaims: false, settleUsingBurn: false});
