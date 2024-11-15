@@ -1,4 +1,10 @@
 # Uniswap Solidity Hooks Template
+
+> [!WARNING]
+> This project is still in a very early and experimental phase. It has never
+> been audited nor thoroughly reviewed for security vulnerabilities. Do not use
+> in production.
+
 ### **A template for writing Uniswap v4 Hooks with custom swap curve implemantion in Stylus**
 
 This template is built on top of [Uniswap V4 Template](https://github.com/uniswapfoundation/v4-template).
