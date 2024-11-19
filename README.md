@@ -41,22 +41,11 @@ forge install
 forge test
 ```
 
-### Local Development (Anvil)
+### Local Development (Nitro Testnode)
 
-Other than writing unit tests (recommended!), you can only deploy & test hooks on [anvil](https://book.getfoundry.sh/anvil/)
+Other than writing unit tests, you can deploy & test hooks on [Nitro Testnode](https://github.com/OffchainLabs/nitro-testnode).
 
-```bash
-# start anvil, a local EVM chain
-anvil
-
-# in a new terminal
-forge script script/Anvil.s.sol \
-    --rpc-url http://localhost:8545 \
-    --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 \
-    --broadcast
-```
-
-See [script/](script/) for hook deployment, pool creation, liquidity provision, and swapping.
+You can follow this [instruction](https://github.com/OpenZeppelin/uniswap-stylus-curve-template?tab=readme-ov-file#how-to-run-a-local-dev-node) to run Nitro Testnode.
 
 ---
 

@@ -57,7 +57,7 @@ contract Counter is BaseHook {
             afterSwap: true,
             beforeDonate: false,
             afterDonate: false,
-            beforeSwapReturnDelta: false, // -- Enables Custom Curves --  //
+            beforeSwapReturnDelta: false, // -- Enable Custom Curves here if needed --  //
             afterSwapReturnDelta: false,
             afterAddLiquidityReturnDelta: false,
             afterRemoveLiquidityReturnDelta: false
