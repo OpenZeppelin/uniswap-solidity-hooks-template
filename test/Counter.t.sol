@@ -49,7 +49,7 @@ contract CounterTest is Test, Fixtures {
         );
 
         // Deploy mocked Custom Curve contract
-        address customCurveContract = 0xE0f5206BBD039e7b0592d8918820024e2a7437b9;
+        address customCurveContract = 0x5FbDB2315678afecb367f032d93F642f64180aa3;
         deployCodeTo("MockCurve.sol:MockCurve", abi.encode(), customCurveContract);
 
         // Deploy Counter Contract
